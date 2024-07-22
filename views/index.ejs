@@ -1,0 +1,61 @@
+<%- include('partials/header.ejs'); -%>
+  <div class="info-zone">
+    <h2>Please Note:</h2>
+    <p>This application is a sample model demonstrating CRUD operations in PostgreSQL. It is intended for educational purposes only.</p>
+    <p> Data entered here can be seen/delete/read by anyone using the app.</p>
+    <p>For developers who are going to use this exact project, please ensure to implement an authentication page to secure your data.</p>
+    <p>This is not for practical use. Kindly delete your data before leaving the application or enter random data.</p>
+
+  </div>
+  <div class="box" id="heading">
+    <h1>
+      <%= listTitle %>
+    </h1>
+  </div>
+  <div class="box">
+    <% for(let item of listItems){%>
+      <div class="item">
+        <!-- <form action="/delete" method="post">
+          <input type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= item.id %>">
+          <label for="delete-checkbox-<%= item.id %>">
+            <i class="fas fa-trash"></i>
+          </label>
+        </form> -->
+        <form action="/delete" method="post">
+          <input type="checkbox" id="delete-checkbox-<%= item.id %>" class="delete-checkbox" name="deleteItemId" value="<%= item.id %>" onchange="this.form.submit()">
+          <label for="delete-checkbox-<%= item.id %>" class="delete-label">
+            <i class="fas fa-trash"></i>
+          </label>
+        </form>
+
+        <p id="title<%=item.id%>" class="overflow-div">
+          <%= item.title %>
+        </p>
+
+        <form class="edit" action="/edit" method="post">
+          <input type="hidden" name="updatedItemId" value="<%= item.id %>">
+          <input id="input<%=item.id%>" type="text" name="updatedItemTitle" value="<%= item.title %>" autocomplete="off"
+            autofocus="true" hidden="true" />
+          <button id="done<%=item.id%>" class="edit" type="submit" hidden><img class="icon"
+              src="/assets/icons/check-solid.svg" alt="tick image"></button>
+        </form>
+        <button id="edit<%=item.id%>" class="edit" onclick="handler('<%=item.id%>')"><img class="icon"
+            src="/assets/icons/pencil-solid.svg" alt="pencil image"></button>
+      </div>
+      <% } %>
+
+        <form class="item" action="/add" method="post">
+          <input type="text" name="newItem" placeholder="New Item" autocomplete="off" autofocus="true" />
+          <button class="add" type="submit" name="list" value=<%=listTitle %> >+</button>
+        </form>
+  </div>
+
+  <script>
+    function handler(id) {
+      document.getElementById("title" + id).setAttribute("hidden", true)
+      document.getElementById("edit" + id).setAttribute("hidden", true)
+      document.getElementById("done" + id).removeAttribute("hidden")
+      document.getElementById("input" + id).removeAttribute("hidden")
+    }
+  </script>
+  <%- include('partials/footer.ejs'); -%>
