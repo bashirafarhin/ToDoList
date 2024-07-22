@@ -10,9 +10,9 @@ const pool = new Pool({
 
 pool.connect((err,client,done) => {
     if(err) {
-        throw err;
+        console.log(err);
     } else {
-        console.log("connection created with PostgreSQL")
+        console.log("connection created with PostgreSQL");
     }
 });
 
